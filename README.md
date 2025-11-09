@@ -16,13 +16,13 @@ Note: This workflow is a mock video generation (without a real Veo3 (paid tier) 
 
 5. Google Sheets: Log Idea – Appends generated video ideas, title, and caption to a Google Sheet for record-keeping.
 
-6. Veo 3: Generate Video – Sends the AI-generated prompt to Veo 3 (or mock endpoint) to generate the video.
+6. Veo 3: Generate Video – Sends the AI-generated prompt to Veo 3 (or mock endpoint) to generate the video. (simulate)
 
-7. Processing / Wait – Wait node simulates the video generation process for asynchronous handling.
+7. Processing / Wait – Wait node simulates the video generation process for asynchronous handling. (simulate)
 
-8. Get Video URL / ID – Retrieves the generated video URL or ID from Veo 3.
+8. Get Video URL / ID – Retrieves the generated video URL or ID from Veo 3. (simulate)
 
-9. Video Ingestion – Prepares the video for publishing (e.g., downloading from GitHub raw URL or internal storage).
+9. Video Ingestion – Prepares the video for publishing (this case: downloading from GitHub raw URL or internal storage). (simulate)
 
 10. Facebook: Publish – Posts the video to a connected Facebook Page, using title and caption metadata.
 
@@ -47,6 +47,8 @@ Google Sheets – API credentials for appending and updating rows. (please use y
 Facebook Graph API – Page access token. (must create your own fb page)
 
 AI Agent – Gemini API Key or OAuth setup. (set your own api key)
+
+Video upload to GitHub (use raw url).
 
 (Optional) Adjust Veo 3 endpoint to real API when available.
 
