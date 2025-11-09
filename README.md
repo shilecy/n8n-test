@@ -68,7 +68,7 @@ Parameterization – Make Page IDs, sheet URLs, and video URLs dynamic for multi
 
 ## Deliverables
 
-Workflow Video Demo – Screen recording showing the workflow execution and Facebook post.
+Workflow Video Demo – Screen recording showing the workflow execution, Gsheet update and Facebook post. (Veo3 to FB.webm)
 
 Exported n8n Workflow JSON – .json file for import and testing.
 
