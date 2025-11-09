@@ -70,8 +70,6 @@ Parameterization – Make Page IDs, sheet URLs, and video URLs dynamic for multi
 
 Workflow Video Demo – Screen recording showing the workflow execution, Gsheet update and Facebook post. (Veo3 to FB.webm)
 
-Exported n8n Workflow JSON – .json file for import and testing.
+Exported n8n Workflow JSON – .json file for import and testing. (Veo3 to FB post.json)
 
-Short Documentation – This 1–2 page brief explaining workflow, assumptions, and credentials.
-
-Bonus – LinkedIn publishing integration (optional).
+Short Documentation – This 1–2 page brief explaining workflow, assumptions, and credentials. (README.md)
