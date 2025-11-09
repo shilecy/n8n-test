@@ -1,0 +1,554 @@
+{
+  "name": "Veo3 to FB post",
+  "nodes": [
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "You are a creative social media content agent. Your task is to generate a short, viral video concept, a precise Veo 3 video prompt, and a concise Facebook caption based on the topic: 'AI Marketing'. You MUST use the Structured Output Parser. You MUST use the Structured Output Parser to format your final response.",
+        "hasOutputParser": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3,
+      "position": [
+        -224,
+        -416
+      ],
+      "id": "4f389a91-22fd-4db4-85e2-614380da0715",
+      "name": "2. AI Agent: Generate Idea"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        -304,
+        -240
+      ],
+      "id": "07faaddb-5707-4eda-b152-c2793eb974ea",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "enpjla0Vqbmka53G",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "schemaType": "manual",
+        "inputSchema": "{\n  \"type\": \"object\",\n  \"properties\": {\n    \"title\": {\n      \"type\": \"string\",\n      \"description\": \"A catchy, short title for the video.\"\n    },\n    \"prompt\": {\n      \"type\": \"string\",\n      \"description\": \"A cinematic, descriptive prompt for a text-to-video model (Veo 3), max 200 characters.\"\n    },\n    \"caption\": {\n      \"type\": \"string\",\n      \"description\": \"A concise, engaging social media caption including relevant hashtags like #AI #Automation.\"\n    }\n  },\n  \"required\": [\"title\", \"prompt\", \"caption\"]\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        -16,
+        -240
+      ],
+      "id": "65751fda-8d00-4ac6-b9d5-f3fe8d382612",
+      "name": "Structured Output Parser"
+    },
+    {
+      "parameters": {
+        "httpRequestMethod": "POST",
+        "graphApiVersion": "v23.0",
+        "node": "me",
+        "edge": "feed",
+        "options": {
+          "queryParameters": {
+            "parameter": [
+              {
+                "name": "message",
+                "value": "This is test post from n8n"
+              }
+            ]
+          }
+        }
+      },
+      "type": "n8n-nodes-base.facebookGraphApi",
+      "typeVersion": 1,
+      "position": [
+        688,
+        -64
+      ],
+      "id": "e1539dea-33d2-4208-bfd8-6cd62577edc3",
+      "name": "Facebook Graph API1",
+      "credentials": {
+        "facebookGraphApi": {
+          "id": "OhTlbLc2V7E32wcC",
+          "name": "Facebook Graph account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "8240e0cb-9eb7-4608-868a-6a8c09288cce",
+              "name": "title",
+              "value": "={{ $json.output.title }}",
+              "type": "string"
+            },
+            {
+              "id": "3c531dc4-5eaa-4dba-8dd6-7e2a65762f18",
+              "name": "prompt",
+              "value": "={{ $json.output.prompt }}",
+              "type": "string"
+            },
+            {
+              "id": "a7fb20b1-8cca-415d-bc25-ff86afc4bee3",
+              "name": "caption",
+              "value": "={{ $json.output.caption }}",
+              "type": "string"
+            },
+            {
+              "id": "82c7ceec-bccc-4c25-bf1b-44c56e2916c3",
+              "name": "job_id",
+              "value": "=={{ $execution.id }}",
+              "type": "string"
+            },
+            {
+              "id": "c01a5482-26b9-4a76-87f1-95bffb4500df",
+              "name": "targetPageId",
+              "value": "891617167365020",
+              "type": "string"
+            },
+            {
+              "id": "1e0deb5d-62b6-45da-9261-554a17926c04",
+              "name": "video_id",
+              "value": "1DUBfjIZrFCxQbxM1IVBPDV4xUpIcpgho",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        128,
+        -416
+      ],
+      "id": "4bd1b68b-7961-4ee4-b846-21e12dbaa582",
+      "name": "3. Set (Flatten AI Output)"
+    },
+    {
+      "parameters": {
+        "content": "## IDEA GENERATION\n",
+        "height": 368,
+        "width": 1152
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -608,
+        -464
+      ],
+      "typeVersion": 1,
+      "id": "fff48913-bfb3-4c79-81fe-aaa043af498a",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "## FETCHING\n",
+        "height": 208,
+        "width": 1152,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -608,
+        -96
+      ],
+      "typeVersion": 1,
+      "id": "dc6132fc-8fef-40dc-ba5d-88d8e6f2f3d2",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "content": "## POSTING\n",
+        "height": 176,
+        "width": 1152,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -608,
+        112
+      ],
+      "typeVersion": 1,
+      "id": "1614a3db-c77d-4753-87dd-84419319be2a",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "https://docs.google.com/spreadsheets/d/1ODBwBe_rRUkXroeEyTnaKsabaAYYfoTBPfiBO9DhLMA/edit?gid=0#gid=0",
+          "mode": "url"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "https://docs.google.com/spreadsheets/d/1ODBwBe_rRUkXroeEyTnaKsabaAYYfoTBPfiBO9DhLMA/edit?gid=0#gid=0",
+          "mode": "url"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Title": "={{ $json.title }}",
+            "Prompt": "={{ $json.prompt }}",
+            "Caption": "={{ $json.caption }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Title",
+              "displayName": "Title",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Prompt",
+              "displayName": "Prompt",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Caption",
+              "displayName": "Caption",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Status",
+              "displayName": "Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Video_URL",
+              "displayName": "Video_URL",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Post_Link",
+              "displayName": "Post_Link",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        352,
+        -416
+      ],
+      "id": "3eb74aa8-185e-413e-b245-a47b431cdc51",
+      "name": "4. Google Sheets (Log Idea)",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "Nl0RQEYTMVcz5Vbf",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://postman-echo.com/post",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "duration",
+              "value": "6"
+            },
+            {
+              "name": "webhook_url",
+              "value": "https://your-n8n-webhook-to-listen-for-completion.com"
+            },
+            {
+              "name": "Title",
+              "value": "={{ $json.Title }}"
+            },
+            {
+              "name": "Caption",
+              "value": "={{ $json.Caption }}"
+            },
+            {
+              "name": "Prompt",
+              "value": "={{ $json.Prompt }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        -416,
+        -80
+      ],
+      "id": "3de40dff-7a93-492a-bb1f-31f5b353d413",
+      "name": "5. Veo 3: Video Generation"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        -160,
+        -80
+      ],
+      "id": "6d02a38f-8153-490b-8e94-4024d14e5ed2",
+      "name": "6. Processing",
+      "webhookId": "7e8382a6-7b5a-4edb-b7b0-86108bc002ff"
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "/**\n * This node mocks the JSON response from a Veo 3 webhook, indicating the video is ready.\n * It ensures all original metadata is carried forward along with the mock video URL.\n */\n\n// Execution ID for tracking\nconst executionId = $execution.id;\n\n// FIX: We must use the exact capitalization (Title, Caption, Prompt)\n// as defined in the upstream nodes (like Node 3). JavaScript is case-sensitive.\nconst Title = $json.Title;\nconst Caption = $json.Caption;\nconst Prompt = $json.Prompt;\n\n// GitHub raw URL of the video (Hardcoded for testing)\nconst GITHUB_VIDEO_URL = \"https://github.com/shilecy/n8n-test/raw/main/Copy%20of%20videocopy.mp4\";\n\n// The Function node must return an array of items.\nreturn {\n  json: {\n    job_id: $json.job_id || executionId,\n    \n    // Now correctly passing the capitalized fields:\n    Title: Title,\n    Caption: Caption,\n    Prompt: Prompt,\n    \n    targetPageId: $json.targetPageId || '891617167365020',\n    status: \"Video Ready\",\n    video_url: GITHUB_VIDEO_URL\n  }\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        96,
+        -80
+      ],
+      "id": "88683624-df63-4e50-9121-69e137087f76",
+      "name": "7. Get Video URL"
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.video_url }}",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "file",
+              "outputPropertyName": "videoFile"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        352,
+        -80
+      ],
+      "id": "f4292d9b-1ddf-4fe1-ba4a-9a3f528ef82c",
+      "name": "8. Video Ingestion"
+    },
+    {
+      "parameters": {
+        "httpRequestMethod": "POST",
+        "graphApiVersion": "v23.0",
+        "node": "={{ $json.targetPageId }}",
+        "edge": "videos",
+        "sendBinaryData": true,
+        "binaryPropertyName": "videoFile",
+        "options": {
+          "queryParameters": {
+            "parameter": [
+              {
+                "name": "caption",
+                "value": "={{ $json.caption }}"
+              },
+              {
+                "name": "title",
+                "value": "={{ $json.title }}"
+              }
+            ]
+          }
+        }
+      },
+      "type": "n8n-nodes-base.facebookGraphApi",
+      "typeVersion": 1,
+      "position": [
+        -416,
+        144
+      ],
+      "id": "5b89ca42-14db-4804-a993-c39c0c19298c",
+      "name": "9. Facebook: Publish",
+      "credentials": {
+        "facebookGraphApi": {
+          "id": "OhTlbLc2V7E32wcC",
+          "name": "Facebook Graph account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -416,
+        -416
+      ],
+      "id": "9b6be537-ead1-4a94-8787-b9ce75bece5e",
+      "name": "1. When clicking ‘Execute workflow’"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "2. AI Agent: Generate Idea": {
+      "main": [
+        [
+          {
+            "node": "3. Set (Flatten AI Output)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "2. AI Agent: Generate Idea",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "2. AI Agent: Generate Idea",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "3. Set (Flatten AI Output)": {
+      "main": [
+        [
+          {
+            "node": "4. Google Sheets (Log Idea)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "4. Google Sheets (Log Idea)": {
+      "main": [
+        [
+          {
+            "node": "5. Veo 3: Video Generation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "5. Veo 3: Video Generation": {
+      "main": [
+        [
+          {
+            "node": "6. Processing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "6. Processing": {
+      "main": [
+        [
+          {
+            "node": "7. Get Video URL",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "7. Get Video URL": {
+      "main": [
+        [
+          {
+            "node": "8. Video Ingestion",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "8. Video Ingestion": {
+      "main": [
+        [
+          {
+            "node": "9. Facebook: Publish",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "9. Facebook: Publish": {
+      "main": [
+        []
+      ]
+    },
+    "1. When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "2. AI Agent: Generate Idea",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "ba781ea3-380b-475b-bb35-4c9ccc77434e",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "b0bd9e2910c0aa3d43ae880be446af95594e56cdb85c75c8dead597f4ac96d68"
+  },
+  "id": "y06hOBoJBCul80wY",
+  "tags": []
+}
